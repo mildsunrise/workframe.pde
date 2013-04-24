@@ -1,0 +1,37 @@
+{
+  "name": "workframe",
+  "version": "0.0.1",
+  "description": "Expressive, flexible graphics processing in Processing!",
+  "keywords": ["processing","expressive","graphics","image"],
+  "homepage": "https://github.com/jmendeth/workframe",
+
+  "private": true,
+
+  "author": "Xavier Mendez <jmendeth@gmail.com> (http://jmendeth.com)",
+  "contributors": [
+    "Xavier Mendez <jmendeth@gmail.com>"
+  ],
+  "maintainers": [
+    "Xavier Mendez <jmendeth@gmail.com>"
+  ],
+
+  "engines": { "node": ">= 0.6.0" },
+  "dependencies": {
+  },
+  "devDependencies": {
+    "grunt": "0",
+    "grunt-rigger": "0"
+  },
+
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jmendeth/workframe.git"
+  },
+  "bugs": {
+    "url": "https://github.com/jmendeth/workframe/issues"
+  },
+
+  "licenses": [
+    { "type": "BSD", "url": "http://opensource.org/licenses/BSD-2-Clause" }
+  ]
+}
