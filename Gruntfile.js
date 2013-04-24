@@ -1,12 +1,11 @@
 module.exports = function(grunt) {
     grunt.initConfig({
     
+      //TODO: add banner, produce autogenerating files
+    
       // The main task
       rig: {
         compile: {
-          options: {
-            banner: 'Building WorkFrame...\n'
-          },
           files: {
             'workframe.pd': ['src/workframe.pd']
           }
