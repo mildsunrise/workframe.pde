@@ -7,7 +7,7 @@ module.exports = function(grunt) {
       rig: {
         compile: {
           files: {
-            'workframe.pd': ['src/workframe.pd']
+            'workframe.pde': ['src/workframe.pde']
           }
         }
       }
