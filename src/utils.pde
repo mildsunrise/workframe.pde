@@ -4,28 +4,33 @@
 
 // Clone images and graphics
 
-public PGraphics cloneGraphics(PImage img, boolean copy) {
+public PGraphics newGraphics(PImage img, boolean copy) {
   PGraphics ret = createGraphics(img.width, img.height);
   if (copy) ret.set(0,0,img);
   return ret;
 }
-public PGraphics cloneGraphics(PImage img) {
+public PGraphics newGraphics(PImage img) {
   return cloneGraphics(img, false);
 }
 
-public PImage cloneImage(PImage img, int mode, boolean copy) {
+public PImage newImage(PImage img, int mode, boolean copy) {
   PImage ret = createImage(img.width, img.height, mode);
   if (copy) ret.set(0,0,img);
   return ret;
 }
-public PImage cloneImage(PImage img, int mode) {
+public PImage newImage(PImage img, int mode) {
   return cloneImage(img, mode, false);
 }
-public PImage cloneImage(PImage img, boolean copy) {
+public PImage newImage(PImage img, boolean copy) {
   return cloneImage(img, ARGB, copy);
 }
-public PImage cloneImage(PImage img) {
+public PImage newImage(PImage img) {
   return cloneImage(img, ARGB, false);
+}
+
+// see core/geometry.pde
+public PImage newImage(Vector2 dim) {
+  return createImage(dim.x, dim.y);
 }
 
 // More specific utilities
