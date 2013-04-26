@@ -2,8 +2,8 @@
  * High-level effects *
  **********************/
 
-//= library/shadows.pd
-//= library/gradients.pd
+//= library/shadows.pde
+//= library/gradients.pde
 
 
 

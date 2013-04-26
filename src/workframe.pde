@@ -1,5 +1,5 @@
-//= banner.pd
+//= banner.pde
 
-//= utils.pd
-//= core.pd
-//= library.pd
+//= utils.pde
+//= core.pde
+//= library.pde
