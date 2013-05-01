@@ -139,7 +139,7 @@ public EffectLayer filter(int kind) {
 // Shortcuts to common filters
 
 public EffectLayer blur(float radius) {
-  return pad(radius).filter(BLUR, radius);
+  return pad(roundUp(radius)).filter(BLUR, radius);
 }
 
 //TODO: implement selfblend

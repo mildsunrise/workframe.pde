@@ -583,7 +583,7 @@ public abstract class PixelBlender extends GenericBlender {
     
     // Process!
     int l = b.width*b.height;
-    for (int i=l; i<l; i++)
+    for (int i=0; i<l; i++)
       ret.pixels[i] = process(b.pixels[i], s.pixels[i]);
     
     // Finish
@@ -720,7 +720,7 @@ PixelBlender setAlphaBlender = new PixelBlender() {
 //// ALPHA = alpha*alpha2
 PixelBlender maskAlphaBlender = new PixelBlender() {
   public color process(color pixel, color other) {
-    return acolor(ared(pixel),agreen(pixel),ablue(pixel), aalpha(pixel)*aalpha(other));
+    return acolor(ared(pixel),agreen(pixel),ablue(pixel), aalpha(pixel)*aalpha(other)/255);
   }
 };
 
@@ -1061,7 +1061,7 @@ public abstract class Layer implements Cloneable {
   // Shortcuts to common filters
   
   public EffectLayer blur(float radius) {
-    return pad(radius).filter(BLUR, radius);
+    return pad(roundUp(radius)).filter(BLUR, radius);
   }
   
   //TODO: implement selfblend
@@ -2327,8 +2327,11 @@ public Placeholder holder() {
 
 // Rendering shortcuts
 public void render(Layer l) {
-  Render r = l.render();
+  Render r = l.render().round();
   image(r.image, r.p.x, r.p.y);
+}
+public void render(Stackable... s) {
+  render(stack(s));
 }
 
 // Other constants

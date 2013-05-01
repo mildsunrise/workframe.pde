@@ -77,7 +77,7 @@ public abstract class PixelBlender extends GenericBlender {
     
     // Process!
     int l = b.width*b.height;
-    for (int i=l; i<l; i++)
+    for (int i=0; i<l; i++)
       ret.pixels[i] = process(b.pixels[i], s.pixels[i]);
     
     // Finish

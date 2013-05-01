@@ -124,7 +124,7 @@ PixelBlender setAlphaBlender = new PixelBlender() {
 //// ALPHA = alpha*alpha2
 PixelBlender maskAlphaBlender = new PixelBlender() {
   public color process(color pixel, color other) {
-    return acolor(ared(pixel),agreen(pixel),ablue(pixel), aalpha(pixel)*aalpha(other));
+    return acolor(ared(pixel),agreen(pixel),ablue(pixel), aalpha(pixel)*aalpha(other)/255);
   }
 };
 
