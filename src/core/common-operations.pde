@@ -124,6 +124,7 @@ public EffectLayer invertAlpha() {
 public EffectLayer fill(color fill) {
   return effect(new FillEffect(fill));
 }
+//FIXME: other color shortcuts
 
 public EffectLayer opacity(float opacity) {
   return effect(new OpacityEffect(opacity));
@@ -174,3 +175,4 @@ public EffectLayer blur(float radius) {
 
 //TODO: implement selfblend
 //TODO: implement missing processors and their operations
+//TODO: implement autocrop
