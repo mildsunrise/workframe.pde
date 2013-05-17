@@ -53,6 +53,11 @@ public PGraphics newGraphics(Vector2 dim) {
 public Rectangle2 rectangle() {
   return rectangle(0,0,width,height);
 }
+public Target TBOUNDS = new Target() {
+  public Rectangle2 getTarget() {
+    return rectangle();
+  }
+};
 
 
 // More specific utilities
