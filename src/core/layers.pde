@@ -137,6 +137,12 @@ public class GraphicsLayer extends Layer {
   public GraphicsLayer rect(Rectangle2 r) {
     return rect(r.p.x, r.p.y, r.dim.x, r.dim.y);
   }
+  public GraphicsLayer rect(Rectangle2 r, float radius) {
+    return rect(r.p.x, r.p.y, r.dim.x, r.dim.y, radius);
+  }
+  public GraphicsLayer rect(Rectangle2 r, float tl, float tr, float br, float bl) {
+    return rect(r.p.x, r.p.y, r.dim.x, r.dim.y, tl, tr, br, bl);
+  }
   public GraphicsLayer circle(Point2 p, float radius) {
     return circle(p.x, p.y, radius);
   }
@@ -384,6 +390,9 @@ public class GroupLayer extends Layer implements Stackable {
 // Layer wrapping shortcuts
 public ImageLayer layer(PImage img) {
   return new ImageLayer(new Render(coord(0,0), img));
+}
+public ImageLayer layer(String s) {
+  return layer(loadImage(s));
 }
 public ImageLayer layer(Render r) {
   return new ImageLayer(r);
