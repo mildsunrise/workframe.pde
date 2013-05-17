@@ -14,7 +14,37 @@ public EffectLayer align(String ref, float x, float y, float targetX, float targ
   return align(ref,x,y,rectangle(targetX,targetY,0,0));
 }
 public EffectLayer align(String ref, float x, float y) {
-  return align(ref,x,y,rectangle());
+  return align(ref,x,y,TBOUNDS);
+}
+
+public EffectLayer align(float x, float y, Target target) {
+  return align(BOUNDS,x,y,target);
+}
+public EffectLayer align(float x, float y, float targetX, float targetY) {
+  return align(BOUNDS,x,y,targetX,targetY);
+}
+public EffectLayer align(float x, float y) {
+  return align(BOUNDS,x,y);
+}
+
+public EffectLayer center(String ref, Target target) {
+  return align(ref,0,0,target);
+}
+public EffectLayer center(String ref, float targetX, float targetY) {
+  return align(ref,0,0,targetX,targetY);
+}
+public EffectLayer center(String ref) {
+  return align(ref,0,0);
+}
+
+public EffectLayer center(Target target) {
+  return center(BOUNDS,target);
+}
+public EffectLayer center(float targetX, float targetY) {
+  return center(BOUNDS,targetX,targetY);
+}
+public EffectLayer center() {
+  return center(BOUNDS);
 }
 
 // Cropping & Padding operations
