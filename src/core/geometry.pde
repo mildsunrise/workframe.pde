@@ -95,7 +95,7 @@ public class Vector2 implements Cloneable {
   }
 }
 
-public class Point2 extends Vector2 {
+public class Point2 extends Vector2 implements Target {
   public Point2(float x, float y) {
     super(x,y);
   }
@@ -128,6 +128,11 @@ public class Point2 extends Vector2 {
   }
   public Point2 roundDown() {
     return new Point2(__roundDown(x), __roundDown(y));
+  }
+  
+  // see Target at other.pde
+  public Rectangle2 getTarget() {
+    return rectangle(this);
   }
 }
 
@@ -223,8 +228,8 @@ public class Rectangle2 implements Cloneable, Target {
       float rpy = r.p.y;
       float rcx = r.p.x+r.dim.x;
       float rcy = r.p.y+r.dim.y;
-      if (px<rpx) px=rpx;
-      if (px<rpx) py=rpy;
+      if (px>rpx) px=rpx;
+      if (py>rpy) py=rpy;
       if (cx<rcx) cx=rcx;
       if (cy<rcy) cy=rcy;
     }
@@ -264,6 +269,8 @@ public Rectangle2 rectangle(Point2 p) {
 public Rectangle2 rectangle(float x, float y) {
   return rectangle(coord(x,y));
 }
+
+public final Point2 ORIG = coord(0,0);
 
 
 
