@@ -68,10 +68,10 @@ public int roundDown(float x) {
   return ret;
 }
 public float alignToStd(float align) {
-  return align*2 - 1;
+  return (align+1) / 2;
 }
 public float stdToAlign(float std) {
-  return (std+1) / 2;
+  return std*2 - 1;
 }
 
 public float lrp(float from, float to, float amt) {
