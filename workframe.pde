@@ -63,6 +63,11 @@ public PGraphics newGraphics(Vector2 dim) {
 public Rectangle2 rectangle() {
   return rectangle(0,0,width,height);
 }
+public Target TBOUNDS = new Target() {
+  public Rectangle2 getTarget() {
+    return rectangle();
+  }
+};
 
 
 // More specific utilities
@@ -78,10 +83,10 @@ public int roundDown(float x) {
   return ret;
 }
 public float alignToStd(float align) {
-  return align*2 - 1;
+  return (align+1) / 2;
 }
 public float stdToAlign(float std) {
-  return (std+1) / 2;
+  return std*2 - 1;
 }
 
 public float lrp(float from, float to, float amt) {
@@ -261,7 +266,7 @@ public class Vector2 implements Cloneable {
   }
 }
 
-public class Point2 extends Vector2 {
+public class Point2 extends Vector2 implements Target {
   public Point2(float x, float y) {
     super(x,y);
   }
@@ -294,6 +299,11 @@ public class Point2 extends Vector2 {
   }
   public Point2 roundDown() {
     return new Point2(__roundDown(x), __roundDown(y));
+  }
+  
+  // see Target at other.pde
+  public Rectangle2 getTarget() {
+    return rectangle(this);
   }
 }
 
@@ -389,8 +399,8 @@ public class Rectangle2 implements Cloneable, Target {
       float rpy = r.p.y;
       float rcx = r.p.x+r.dim.x;
       float rcy = r.p.y+r.dim.y;
-      if (px<rpx) px=rpx;
-      if (px<rpx) py=rpy;
+      if (px>rpx) px=rpx;
+      if (py>rpy) py=rpy;
       if (cx<rcx) cx=rcx;
       if (cy<rcy) cy=rcy;
     }
@@ -430,6 +440,8 @@ public Rectangle2 rectangle(Point2 p) {
 public Rectangle2 rectangle(float x, float y) {
   return rectangle(coord(x,y));
 }
+
+public final Point2 ORIG = coord(0,0);
 
 
 
@@ -936,7 +948,37 @@ public abstract class Layer implements Cloneable {
     return align(ref,x,y,rectangle(targetX,targetY,0,0));
   }
   public EffectLayer align(String ref, float x, float y) {
-    return align(ref,x,y,rectangle());
+    return align(ref,x,y,TBOUNDS);
+  }
+  
+  public EffectLayer align(float x, float y, Target target) {
+    return align(BOUNDS,x,y,target);
+  }
+  public EffectLayer align(float x, float y, float targetX, float targetY) {
+    return align(BOUNDS,x,y,targetX,targetY);
+  }
+  public EffectLayer align(float x, float y) {
+    return align(BOUNDS,x,y);
+  }
+  
+  public EffectLayer center(String ref, Target target) {
+    return align(ref,0,0,target);
+  }
+  public EffectLayer center(String ref, float targetX, float targetY) {
+    return align(ref,0,0,targetX,targetY);
+  }
+  public EffectLayer center(String ref) {
+    return align(ref,0,0);
+  }
+  
+  public EffectLayer center(Target target) {
+    return center(BOUNDS,target);
+  }
+  public EffectLayer center(float targetX, float targetY) {
+    return center(BOUNDS,targetX,targetY);
+  }
+  public EffectLayer center() {
+    return center(BOUNDS);
   }
   
   // Cropping & Padding operations
@@ -1016,6 +1058,7 @@ public abstract class Layer implements Cloneable {
   public EffectLayer fill(color fill) {
     return effect(new FillEffect(fill));
   }
+  //FIXME: other color shortcuts
   
   public EffectLayer opacity(float opacity) {
     return effect(new OpacityEffect(opacity));
@@ -1066,6 +1109,7 @@ public abstract class Layer implements Cloneable {
   
   //TODO: implement selfblend
   //TODO: implement missing processors and their operations
+  //TODO: implement autocrop
 }
 
 
@@ -2037,6 +2081,12 @@ public class GraphicsLayer extends Layer {
   public GraphicsLayer rect(Rectangle2 r) {
     return rect(r.p.x, r.p.y, r.dim.x, r.dim.y);
   }
+  public GraphicsLayer rect(Rectangle2 r, float radius) {
+    return rect(r.p.x, r.p.y, r.dim.x, r.dim.y, radius);
+  }
+  public GraphicsLayer rect(Rectangle2 r, float tl, float tr, float br, float bl) {
+    return rect(r.p.x, r.p.y, r.dim.x, r.dim.y, tl, tr, br, bl);
+  }
   public GraphicsLayer circle(Point2 p, float radius) {
     return circle(p.x, p.y, radius);
   }
@@ -2284,6 +2334,9 @@ public class GroupLayer extends Layer implements Stackable {
 // Layer wrapping shortcuts
 public ImageLayer layer(PImage img) {
   return new ImageLayer(new Render(coord(0,0), img));
+}
+public ImageLayer layer(String s) {
+  return layer(loadImage(s));
 }
 public ImageLayer layer(Render r) {
   return new ImageLayer(r);
