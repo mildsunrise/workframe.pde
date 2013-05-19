@@ -1058,7 +1058,18 @@ public abstract class Layer implements Cloneable {
   public EffectLayer fill(color fill) {
     return effect(new FillEffect(fill));
   }
-  //FIXME: other color shortcuts
+  public EffectLayer fill(float c1) {
+    return fill(color(c1));
+  }
+  public EffectLayer fill(float c1, float c2) {
+    return fill(color(c1,c2));
+  }
+  public EffectLayer fill(float c1, float c2, float c3) {
+    return fill(color(c1,c2,c3));
+  }
+  public EffectLayer fill(float c1, float c2, float c3, float c4) {
+    return fill(color(c1,c2,c3,c4));
+  }
   
   public EffectLayer opacity(float opacity) {
     return effect(new OpacityEffect(opacity));
@@ -2101,6 +2112,9 @@ public class GraphicsLayer extends Layer {
   public GraphicsLayer font(String name, float size) {
     return textFont(createFont(name, size, true), size);
   }
+  public GraphicsLayer image(String file, float x, float y) {
+    return image(loadImage(file), x, y);
+  }
 }
 
 
@@ -2359,14 +2373,14 @@ public GraphicsLayer graphics() {
 // Stacking & grouping shortcuts
 public StackLayer stack(Stackable... stackables) {
   StackLayer ret = new StackLayer();
-  for (int i=0; i<stackables.length; i++)
-    ret.add(stackables[i]);
+  for (int i=stackables.length; i>0;)
+    ret.add(stackables[--i]);
   return ret;
 }
 public GroupLayer group(Layer... items) {
   GroupLayer ret = new GroupLayer();
-  for (int i=0; i<items.length; i++)
-    ret.add(items[i]);
+  for (int i=items.length; i>0;)
+    ret.add(items[--i]);
   return ret;
 }
 
@@ -2379,12 +2393,13 @@ public Placeholder holder() {
 }
 
 // Rendering shortcuts
-public void render(Layer l) {
+public Render render(Layer l) {
   Render r = l.render().round();
   image(r.image, r.p.x, r.p.y);
+  return r;
 }
-public void render(Stackable... s) {
-  render(stack(s));
+public Render render(Stackable... s) {
+  return render(stack(s));
 }
 
 // Other constants
