@@ -124,7 +124,18 @@ public EffectLayer invertAlpha() {
 public EffectLayer fill(color fill) {
   return effect(new FillEffect(fill));
 }
-//FIXME: other color shortcuts
+public EffectLayer fill(float c1) {
+  return fill(color(c1));
+}
+public EffectLayer fill(float c1, float c2) {
+  return fill(color(c1,c2));
+}
+public EffectLayer fill(float c1, float c2, float c3) {
+  return fill(color(c1,c2,c3));
+}
+public EffectLayer fill(float c1, float c2, float c3, float c4) {
+  return fill(color(c1,c2,c3,c4));
+}
 
 public EffectLayer opacity(float opacity) {
   return effect(new OpacityEffect(opacity));
