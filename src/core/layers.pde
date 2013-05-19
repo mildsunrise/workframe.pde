@@ -438,12 +438,13 @@ public Placeholder holder() {
 }
 
 // Rendering shortcuts
-public void render(Layer l) {
+public Render render(Layer l) {
   Render r = l.render().round();
   image(r.image, r.p.x, r.p.y);
+  return r;
 }
-public void render(Stackable... s) {
-  render(stack(s));
+public Render render(Stackable... s) {
+  return render(stack(s));
 }
 
 // Other constants
