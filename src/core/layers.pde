@@ -157,6 +157,9 @@ public class GraphicsLayer extends Layer {
   public GraphicsLayer font(String name, float size) {
     return textFont(createFont(name, size, true), size);
   }
+  public GraphicsLayer image(String file, float x, float y) {
+    return image(loadImage(file), x, y);
+  }
 }
 
 
