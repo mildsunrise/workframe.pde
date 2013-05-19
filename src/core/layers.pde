@@ -418,14 +418,14 @@ public GraphicsLayer graphics() {
 // Stacking & grouping shortcuts
 public StackLayer stack(Stackable... stackables) {
   StackLayer ret = new StackLayer();
-  for (int i=0; i<stackables.length; i++)
-    ret.add(stackables[i]);
+  for (int i=stackables.length; i>0;)
+    ret.add(stackables[--i]);
   return ret;
 }
 public GroupLayer group(Layer... items) {
   GroupLayer ret = new GroupLayer();
-  for (int i=0; i<items.length; i++)
-    ret.add(items[i]);
+  for (int i=items.length; i>0;)
+    ret.add(items[--i]);
   return ret;
 }
 
