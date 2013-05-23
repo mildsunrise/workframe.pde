@@ -34,3 +34,18 @@
     overloaded accordingly, which call the constructor with
     the appropiate values.
 
+ 4. Whenever possible, we try to emulate a dynamically-typed language.
+
+    For example, instead of implementing the interface `Stackable`
+    just on `BlenderLayer` and `StackLayer` (as we would do in
+    classical OOP), we implement it in `Layer`, with dummy methods
+    that **always throw**. `BlenderLayer` overrides these methods
+    as appropiate.
+
+    That way, using i.e. a `GraphicsLayer` where a `Stackable` is
+    expected won't result in a compile error, but will throw when run.
+
+ 5. For the same reason, we don't usually throw regular `Exception`s
+    (that would require a `try`/`catch` block to compile). Instead we
+    throw `RuntimeException`s.
+
