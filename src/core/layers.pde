@@ -2,7 +2,7 @@
  * The Layer API *
  *****************/
 
-public abstract class Layer implements Cloneable {
+public abstract class Layer implements Cloneable, Stackable {
   // Marking & naming (should be overloaded)
   private final HashMap marks = new HashMap();
   private String name_ = null;
@@ -74,6 +74,11 @@ public abstract class Layer implements Cloneable {
   // Generic effect operations
   public EffectLayer effect(Effect e) {
     return new EffectLayer(e, this);
+  }
+  
+  // "Dummy" implementations
+  public BlenderLayer[] getStackables() {
+    throw new RuntimeException("This is not a Stackable!\nReview your code.");
   }
   
   //= common-operations.pde
@@ -234,7 +239,7 @@ public class BlenderLayer extends Layer implements Stackable {
 }
 
 
-public class StackLayer extends Layer implements Stackable {
+public class StackLayer extends Layer {
   private final ArrayList list = new ArrayList();
   //TODO: export add(stackable), remove(layer), indexOf, size, clear, has(layer), get(int), set, add(int, stackable), empty
   protected Render doRender() {
@@ -332,7 +337,7 @@ public class StackLayer extends Layer implements Stackable {
 }
 
 
-public class GroupLayer extends Layer implements Stackable {
+public class GroupLayer extends Layer {
   private final ArrayList items = new ArrayList();
   protected Render doRender() {
     int l = items.size();
