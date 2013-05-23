@@ -736,6 +736,13 @@ PixelBlender maskAlphaBlender = new PixelBlender() {
   }
 };
 
+//// ALPHA = (1-alpha)*alpha2
+PixelBlender negMaskAlphaBlender = new PixelBlender() {
+  public color process(color pixel, color other) {
+    return acolor(ared(pixel),agreen(pixel),ablue(pixel), (255-aalpha(pixel))*aalpha(other)/255);
+  }
+};
+
 //// ALPHA = blue2
 PixelBlender setToAlphaBlender = new PixelBlender() {
   public color process(color pixel, color other) {
@@ -861,7 +868,7 @@ public class FilterEffect implements Effect {
  * The Layer API *
  *****************/
 
-public abstract class Layer implements Cloneable {
+public abstract class Layer implements Cloneable, Stackable {
   // Marking & naming (should be overloaded)
   private final HashMap marks = new HashMap();
   private String name_ = null;
@@ -894,6 +901,9 @@ public abstract class Layer implements Cloneable {
   public Target mark(String s) {
     return new MarkTarget(this, s);
   }
+  public Target bounds() {
+    return mark(BOUNDS);
+  }
   
   // Cloning and copying
   //TODO: cloning, copying
@@ -906,7 +916,7 @@ public abstract class Layer implements Cloneable {
     HashMap m = new HashMap(r.marks);
     m.putAll(marks);
     m.put(name_, bounds);
-    m.put("bounds", bounds);
+    m.put(BOUNDS, bounds);
     return new Render(r.p, r.image, m);
   }
   public ImageLayer raster() {
@@ -930,6 +940,11 @@ public abstract class Layer implements Cloneable {
   // Generic effect operations
   public EffectLayer effect(Effect e) {
     return new EffectLayer(e, this);
+  }
+  
+  // "Dummy" implementations
+  public BlenderLayer[] getStackables() {
+    throw new RuntimeException("This is not a Stackable!\nReview your code.");
   }
   
   // Positioning operations
@@ -1032,6 +1047,13 @@ public abstract class Layer implements Cloneable {
   }
   public BlenderLayer maskAlpha() {
     return blend(maskAlphaBlender, null);
+  }
+  
+  public BlenderLayer negMaskAlpha(Layer sec) {
+    return blend(negMaskAlphaBlender, sec);
+  }
+  public BlenderLayer negMaskAlpha() {
+    return blend(negMaskAlphaBlender, null);
   }
   
   public BlenderLayer setToAlpha(Layer sec) {
@@ -2186,7 +2208,7 @@ public class BlenderLayer extends Layer implements Stackable {
 }
 
 
-public class StackLayer extends Layer implements Stackable {
+public class StackLayer extends Layer {
   private final ArrayList list = new ArrayList();
   //TODO: export add(stackable), remove(layer), indexOf, size, clear, has(layer), get(int), set, add(int, stackable), empty
   protected Render doRender() {
@@ -2284,7 +2306,7 @@ public class StackLayer extends Layer implements Stackable {
 }
 
 
-public class GroupLayer extends Layer implements Stackable {
+public class GroupLayer extends Layer {
   private final ArrayList items = new ArrayList();
   protected Render doRender() {
     int l = items.size();
