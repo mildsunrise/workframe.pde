@@ -50,7 +50,7 @@ public abstract class Layer implements Cloneable {
     HashMap m = new HashMap(r.marks);
     m.putAll(marks);
     m.put(name_, bounds);
-    m.put("bounds", bounds);
+    m.put(BOUNDS, bounds);
     return new Render(r.p, r.image, m);
   }
   public ImageLayer raster() {
