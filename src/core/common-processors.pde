@@ -128,6 +128,13 @@ PixelBlender maskAlphaBlender = new PixelBlender() {
   }
 };
 
+//// ALPHA = (1-alpha)*alpha2
+PixelBlender negMaskAlphaBlender = new PixelBlender() {
+  public color process(color pixel, color other) {
+    return acolor(ared(pixel),agreen(pixel),ablue(pixel), (255-aalpha(pixel))*aalpha(other)/255);
+  }
+};
+
 //// ALPHA = blue2
 PixelBlender setToAlphaBlender = new PixelBlender() {
   public color process(color pixel, color other) {

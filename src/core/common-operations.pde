@@ -100,6 +100,13 @@ public BlenderLayer maskAlpha() {
   return blend(maskAlphaBlender, null);
 }
 
+public BlenderLayer negMaskAlpha(Layer sec) {
+  return blend(negMaskAlphaBlender, sec);
+}
+public BlenderLayer negMaskAlpha() {
+  return blend(negMaskAlphaBlender, null);
+}
+
 public BlenderLayer setToAlpha(Layer sec) {
   return blend(setToAlphaBlender, sec);
 }
