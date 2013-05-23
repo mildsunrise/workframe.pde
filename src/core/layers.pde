@@ -35,6 +35,9 @@ public abstract class Layer implements Cloneable {
   public Target mark(String s) {
     return new MarkTarget(this, s);
   }
+  public Target bounds() {
+    return mark(BOUNDS);
+  }
   
   // Cloning and copying
   //TODO: cloning, copying
